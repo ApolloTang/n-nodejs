@@ -1,0 +1,11 @@
+to install socket.io
+
+If you use visualstudio 2012, need to set window's environment variable:
+    VisualStudioVersion=11.0
+    
+Also, need to run cmd as admin when running:  npm install socket.io
+
+see:
+http://stackoverflow.com/questions/7274442/node-js-socket-io-windows-7-8
+http://zxtech.wordpress.com/2013/02/20/contextify-specified-platform-toolset-v110-is-not-installed-or-invalid/
+

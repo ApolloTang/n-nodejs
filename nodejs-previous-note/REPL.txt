@@ -1,0 +1,10 @@
+$node
+>
+> os = require('os');  // include operation system library
+> global               // show every variable available in global scope
+> _                    // repeat the previous line.
+
+Three ways to exist REPL:
+    1. [Ctl+c][Ctl+c]  // control c twice
+    2. [Ctl+d]         // control d twice
+    3. > process.exit();

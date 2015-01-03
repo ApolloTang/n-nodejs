@@ -1,0 +1,70 @@
+Different between BOM top level this and node top level this:
+
+BOM top level's this is not the same as node's top level this.
+Bom top level's declared variable === top level's undeclared variable === window === top level's this
+node top level's declared variable  === is private  !== this
+node top level's undeclared variable === this === module.exports and is available in other module.
+
+To share code btw node and BOM
+- Do not use top level this.
+- Do not use window.
+- Always declare variable with var
+- if you want to share variable with other node module, use
+  module.exports, while check for module === undefined in BOM.
+
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Form:
+http://stackoverflow.com/questions/15287201/where-are-vars-stored-in-nodejsSo
+
+Every node module is wrapped as the body of a function as shown here in the node source code
+
+    NativeModule.wrapper = [
+      '(function (exports, require, module, __filename, __dirname) { ',
+      '\n});'
+    ];
+
+So if you declare a variable with var, it is function-local to
+the module, basically a private variable for that module. It
+is not a property of global, module, module.exports, or this. If
+you forget var, it goes into the global object as a property. If
+you explicitly create a property on this, that goes into exports
+and is available to other modules.
+
+Here's a little program that is hopefully enlightening:
+
+var aDeclaredVar = '*aDeclaredVar*';
+undeclaredVar = '*undeclaredVar*';
+this.aThisProperty = '*aThisProperty*';
+module.aModuleProperty = '*aModuleProperty*';
+module.exports.anExportProperty = '*anExportProperty*';
+
+console.log('this', this);                                  //this { aThisProperty: '*aThisProperty*',
+                                                            //       anExportProperty: '*anExportProperty*' }
+console.log('this === exports', this === exports);                // this === exports true
+console.log('this === module', this === module);                  // this === module false
+console.log('this === module.exports', this === module.exports);  // this === module.exports true
+console.log('aDeclaredVar', aDeclaredVar);                        // aDeclaredVar *aDeclaredVar*
+console.log('undeclaredVar', undeclaredVar);                      // undeclaredVar *undeclaredVar*
+console.log('this.aThisProperty', this.aThisProperty);            // this.aThisProperty *aThisProperty*
+console.log('module.aModuleProperty', module.aModuleProperty);    // module.aModuleProperty *aModuleProperty*
+console.log('module.exports.anExportProperty', module.exports.anExportProperty);
+                                                                  // module.exports.anExportProperty *anExportProperty*
+console.log('global.undeclaredVar', global.undeclaredVar);        // global.undeclaredVar *undeclaredVar*
+console.log('global.aDeclaredVar', global.aDeclaredVar);          // global.aDeclaredVar undefined
+
+And it's output:
+
+this { aThisProperty: '*aThisProperty*',
+  anExportProperty: '*anExportProperty*' }
+this === exports true
+this === module false
+this === module.exports true
+aDeclaredVar *aDeclaredVar*
+undeclaredVar *undeclaredVar*
+this.aThisProperty *aThisProperty*
+module.aModuleProperty *aModuleProperty*
+module.exports.anExportProperty *anExportProperty*
+global.undeclaredVar *undeclaredVar*
+global.aDeclaredVar undefined
+
