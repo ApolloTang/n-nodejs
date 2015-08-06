@@ -1,0 +1,27 @@
+::: Using development tool node-dev:
+
+    Installing development package:
+
+        $ sudo npm install node-dev -g
+
+    now instead of typing, at command promp:
+
+        $ node script.js
+
+    you type:
+
+        $ node-dev script.js
+
+    node-dev will watch script.js and re-execute the script whenever the
+    content of the file has changed.
+
+    To exist node-dev:
+
+        ^C
+
+------------------------------------------------------
+
+
+https://github.com/node-inspector/node-inspector
+$ npm install node-inspector -g
+$ node-debug myApp.js
