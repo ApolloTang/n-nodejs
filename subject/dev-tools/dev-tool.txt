@@ -1,6 +1,6 @@
 Three way to debug;
     1. $ node-dev script.js      // using npm module
-    2. $ node debug script.js    // build in debuger
+    2. $ node debug script.js    // build-in debuger
     3. $ node-debug script.js    // chrome inspector
 
 ==========================================

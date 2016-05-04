@@ -1,0 +1,33 @@
+$ node-inspector --help web-host
+--web-host
+  Host to listen on for Node Inspector's web interface.
+  Default: "0.0.0.0"
+  Usage:
+    node-inspector --web-host 127.0.0.1
+    node-inspector --web-host www.example.com
+
+
+$ node-inspector --help web-port
+--web-port, --port, -p
+  Port to listen on for Node Inspector's web interface.
+  Default: "8080"
+  Usage:
+    node-inspector --web-port 8081
+    node-inspector -p 8081
+
+$ node-inspector --help debug-port
+--debug-port, -d
+  Node/V8 debugger port (`node --debug={port}`).
+  Default: 5858
+
+
+Example:
+
+$node --debug-brk=9091 app.js
+    or
+$nodemon --debug-brk=9091 app.js
+
+$node-inspector -d 9091 -p 9090
+Visit http://127.0.0.1:9090/?port=9091 to start debugging.
+
+
