@@ -1,0 +1,21 @@
+{
+  "name": "my-package",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "myscript": "echo myscript",
+    "premyscript": "echo premyscript",
+    "postmyscript": "echo postmyscript",
+    "abc": "runme",
+    "efg": "npm explore sub-package -- ./runme",
+    "ijk": "npm explore sub-package -- npm run efg",
+    "xyz": "sub-package efg"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "sub-package": "file:///Users/apollotang/Desktop/wf/npm-modules/sub-package"
+  }
+}

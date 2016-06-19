@@ -1,0 +1,88 @@
+========
+npm link
+========
+
+The command 'npm link' in a package folder will create a
+globally-installed symbolic link from prefix/package-name to the current folder
+
+        $ cd ~/projects/sub-package
+        $ tree -a
+        .
+        ├── index.js
+        ├── node_modules
+        │   └── .bin
+        ├── package.json
+        └── runme
+
+        $ npm link
+
+        $ npm prefix -g
+        /Users/apollotang/.nvm/versions/node/v4.2.4
+
+        $ ll `npm prefix -g`/lib/node_modules
+        $     total 8
+        drwxr-xr-x  19 nobody      staff   646B  4 May 10:10 node-inspector
+        drwxr-xr-x  25 apollotang  staff   850B 24 Mar 14:53 npm
+[1] >>> lrwxr-xr-x   1 apollotang  staff    52B 18 Jun 13:41 sub-package -> /Users/apollotang/projects/sub-package
+        drwxr-xr-x  11 nobody      staff   374B  7 Feb 20:42 ttab
+
+        $ npm ls -g -depth 0
+        /Users/apollotang/.nvm/versions/node/v4.2.4/lib
+        ├── node-inspector@0.12.8
+        ├── npm@3.8.2
+[1] >>> ├── sub-package@1.0.0 -> /Users/apollotang/projects/sub-package
+        └── ttab@0.2.1
+
+        [1] [!WARNING] Note that this is a *relative* symbolic link. if the folder sub-package is relocated
+            your global package will be messed up:
+
+                "npm ls -g" will show nothing
+                "npm uninstall -g sub-package" will result in error
+
+            Make sure you uninstall you link package before relocating/delete/rename sub-package folder,
+            and relink it again after relocation.
+
+Now in your main package you can link to sub-package:
+
+        $ cd ~/Desktop/wf/npm-modules/my-package
+        $ tree -a
+        .
+        ├── node_modules
+        │   └── .bin
+        └── package.json
+
+        $ npm link sub-package
+        /Users/apollotang/Desktop/wf/npm-modules/my-package/node_modules/sub-package
+            -> /Users/apollotang/.nvm/versions/node/v4.2.4/lib/node_modules/sub-package
+            -> /Users/apollotang/projects/sub-package
+
+        $ tree -a
+        .
+        ├── node_modules
+        │   ├── .bin
+[2] >>> │   │   └── runme -> ../sub-package/runme
+[3] >>> │   └── sub-package -> ../../../../../.nvm/versions/node/v4.2.4/lib/node_modules/sub-package
+        └── package.json
+
+
+        $ npm ls --depth 0
+        my-package@1.0.0 /Users/apollotang/Desktop/wf/npm-modules/my-package
+        └── sub-package@1.0.0 -> /Users/apollotang/Desktop/wf/npm-modules/sub-package extraneous
+
+[4] >>> npm ERR! extraneous: sub-package@1.0.0 /Users/apollotang/Desktop/wf/npm-modules/my-package/node_modules/sub-package
+
+
+     [2][3] Item specified in sub-package/package.json.bin (ie., {runme: ./runme}) is added to my-package/.bin/
+
+            [!WARNING] Note that this is a *relative* symbolic link. if the folder sub-package is relocated
+            "$ npm run <script-name> runme" will fail, and your global package will be messed up (see [1]).
+
+        [4] Don't know why this error is there
+
+
+
+
+
+
+
+
