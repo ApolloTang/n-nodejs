@@ -1,0 +1,22 @@
+// file a.js
+// module.exports = function() { }
+typeof require('./a.js'))  // function
+
+
+// file b.js
+// exports = function() { }
+typeof require('./b.js'))  // object
+
+
+// file c.js
+// exports = module.exports = function() { }
+typeof require('./c.js')   // function
+
+
+// file d.js
+// module.exports = exports = function() { }
+typeof require('./d.js'))  // function
+
+
+
+
