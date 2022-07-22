@@ -1,4 +1,4 @@
-# The difference between `path.resolve` and `path.joint`: a Study 
+# The difference between `path.resolve` and `path.joint`: a study 
 
 Consider the following folder structure:
 
